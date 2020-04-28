@@ -194,12 +194,12 @@ pipelineJob("brave-browser-build-pr-${BRAVE_BROWSER_BRANCH}") {
         booleanParam(name: "SKIP_INIT", value: SKIP_INIT),
         booleanParam(name: "DISABLE_SCCACHE", value: DISABLE_SCCACHE),
         booleanParam(name: "DCHECK_ALWAYS_ON", value: DCHECK_ALWAYS_ON),
+        booleanParam(name: "RUN_NETWORK_AUDIT", value: RUN_NETWORK_AUDIT),
         booleanParam(name: "SKIP_ANDROID", value: SKIP_ANDROID),
         booleanParam(name: "SKIP_IOS", value: SKIP_IOS),
         booleanParam(name: "SKIP_LINUX", value: SKIP_LINUX),
         booleanParam(name: "SKIP_MACOS", value: SKIP_MACOS),
-        booleanParam(name: "SKIP_WINDOWS", value: SKIP_WINDOWS),
-        booleanParam(name: "RUN_NETWORK_AUDIT", value: RUN_NETWORK_AUDIT)
+        booleanParam(name: "SKIP_WINDOWS", value: SKIP_WINDOWS)
     ]
     currentBuild.result = build(job: "brave-browser-build-pr-${BRAVE_BROWSER_BRANCH}", parameters: params, propagate: false).result
 }
