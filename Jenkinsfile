@@ -263,13 +263,14 @@ pipelineJob("brave-browser-build-pr-${BRANCH}") {
             url('https://github.com/brave/devops.git')
           }
           branch('mplesa-jenkins-ci-pipeline-separates')
+          credentials('brave-builds-github-token-for-pr-builder')
         }
       }
-      scriptPath('.jenkins/Jenkinsfile')
+      scriptPath('jenkins/Jenkinsfile')
       lightweight()
     }
   }
-}    
+}
     """)
     params = [
         string(name: "BUILD_TYPE", value: BUILD_TYPE),
