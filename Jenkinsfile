@@ -28,7 +28,7 @@ pipeline {
         BINANCE_CLIENT_ID = credentials("binance-client-id")
     }
     stages {
-        stage("build") {
+        stage("env") {
             steps {
                 withCredentials([usernamePassword(credentialsId: "${GITHUB_CREDENTIAL_ID}", usernameVariable: "PR_BUILDER_USER", passwordVariable: "PR_BUILDER_TOKEN")]) {
                     script {
@@ -52,6 +52,7 @@ pipeline {
             }
         }
         stage("build-all") {
+            agent { label "master" }
             when {
                 beforeAgent true
                 expression { !SKIP }
