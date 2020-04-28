@@ -252,6 +252,7 @@ def getBuilds() {
 }
 
 def startBraveBrowserBuild() {
+    jobDsl(scriptText: 'job("' + "brave-browser-build-pr-${BRANCH}" + '")')
     params = [
         string(name: "BUILD_TYPE", value: BUILD_TYPE),
         string(name: "CHANNEL", value: CHANNEL),
@@ -263,5 +264,5 @@ def startBraveBrowserBuild() {
         booleanParam(name: "DCHECK_ALWAYS_ON", value: DCHECK_ALWAYS_ON),
         booleanParam(name: "DEBUG", value: DEBUG)
     ]
-    currentBuild.result = build(job: "brave-browser-build-pr-" + BRANCH, parameters: params, propagate: false).result
+    currentBuild.result = build(job: "brave-browser-build-pr-${BRANCH}", parameters: params, propagate: false).result
 }
