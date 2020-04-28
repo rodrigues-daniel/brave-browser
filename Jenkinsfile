@@ -284,5 +284,5 @@ pipelineJob("ci/brave-browser-build-pr-${BRANCH}") {
         booleanParam(name: "DCHECK_ALWAYS_ON", value: DCHECK_ALWAYS_ON),
         booleanParam(name: "DEBUG", value: DEBUG)
     ]
-    currentBuild.result = build(job: "brave-browser-build-pr-${BRANCH}", parameters: params, propagate: false).result
+    currentBuild.result = build(job: "ci/brave-browser-build-pr-${BRANCH}", parameters: params, propagate: false).result
 }
