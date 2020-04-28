@@ -183,7 +183,7 @@ pipelineJob("brave-browser-build-pr-${BRAVE_BROWSER_BRANCH}") {
         string(name: "BASE_BRANCH", value: BASE_BRANCH),
         choice(name: "BUILD_TYPE", value: BUILD_TYPE),
         choice(name: "CHANNEL", value: CHANNEL),
-        string(name: "SLACK_BUILDS_CHANNEL", SLACK_BUILDS_CHANNEL),
+        string(name: "SLACK_BUILDS_CHANNEL", value: SLACK_BUILDS_CHANNEL),
         string(name: "SLACK_USERNAME", value: SLACK_USERNAME),
         string(name: "BRANCH_PRODUCTIVITY_HOMEPAGE", value: BRANCH_PRODUCTIVITY_HOMEPAGE),
         string(name: "BRANCH_PRODUCTIVITY_NAME", value: BRANCH_PRODUCTIVITY_NAME),
