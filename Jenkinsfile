@@ -260,11 +260,12 @@ pipelineJob("brave-browser-build-pr-${BRANCH}") {
       scm {
         git {
           remote {
-            url('https://github.com/jenkinsci/job-dsl-plugin.git')
+            url('https://github.com/brave/devops.git')
           }
-          branch('*/master')
+          branch('mplesa-jenkins-ci-pipeline-separates')
         }
       }
+      scriptPath('.jenkins/Jenkinsfile')
       lightweight()
     }
   }
