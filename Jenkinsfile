@@ -256,7 +256,6 @@ def startBraveBrowserBuild() {
     jobDsl(scriptText: """
 pipelineJob("brave-browser-build-pr-${BRANCH}") {
   definition {
-    cpsScm {
       scm {
         git {
         //   remote {
@@ -269,7 +268,6 @@ pipelineJob("brave-browser-build-pr-${BRANCH}") {
       }
       scriptPath('jenkins/Jenkinsfile')
       lightweight()
-    }
   }
 }
     """)
