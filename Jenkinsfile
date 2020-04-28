@@ -9,9 +9,9 @@ pipeline {
         choice(name: "CHANNEL", choices: ["nightly", "dev", "beta", "release", "development"], description: "")
         choice(name: "BUILD_TYPE", choices: ["Release", "Debug"], description: "")
         string(name: "SLACK_BUILDS_CHANNEL", defaultValue: "#build-downloads-bot", description: "")
-        booleanParam(name: "SKIP_SIGNING", defaultValue: true, description: "")
         booleanParam(name: "WIPE_WORKSPACE", defaultValue: false, description: "")
         booleanParam(name: "SKIP_INIT", defaultValue: false, description: "")
+        booleanParam(name: "SKIP_SIGNING", defaultValue: true, description: "")
         booleanParam(name: "DISABLE_SCCACHE", defaultValue: false, description: "")
         booleanParam(name: "DCHECK_ALWAYS_ON", defaultValue: true, description: "")
     }
@@ -47,15 +47,30 @@ pipeline {
     }
 }
 
+@NonCPS
+def stopCurrentBuild() {
+    Jenkins.instance.getItemByFullName(env.JOB_NAME).getLastBuild().doStop()
+}
+
+@NonCPS
+def isStartedManually() {
+    return Jenkins.instance.getItemByFullName(env.JOB_NAME).getLastBuild().getCause(hudson.model.Cause$UpstreamCause) == null
+}
+
+@NonCPS
+def getBuilds() {
+    return Jenkins.instance.getItemByFullName(env.JOB_NAME).builds
+}
+
 def setEnv() {
-    // BUILD_TYPE = params.BUILD_TYPE
-    // CHANNEL = params.CHANNEL
-    // SLACK_BUILDS_CHANNEL = params.SLACK_BUILDS_CHANNEL
-    // DCHECK_ALWAYS_ON = params.DCHECK_ALWAYS_ON
-    // SKIP_SIGNING = params.SKIP_SIGNING
-    // WIPE_WORKSPACE = params.WIPE_WORKSPACE
-    // SKIP_INIT = params.SKIP_INIT
-    // DISABLE_SCCACHE = params.DISABLE_SCCACHE
+    CHANNEL = params.CHANNEL
+    BUILD_TYPE = params.BUILD_TYPE
+    SLACK_BUILDS_CHANNEL = params.SLACK_BUILDS_CHANNEL
+    SKIP_SIGNING = params.SKIP_SIGNING
+    WIPE_WORKSPACE = params.WIPE_WORKSPACE
+    SKIP_INIT = params.SKIP_INIT
+    DISABLE_SCCACHE = params.DISABLE_SCCACHE
+    DCHECK_ALWAYS_ON = params.DCHECK_ALWAYS_ON
     SKIP = false
     SKIP_ANDROID = false
     SKIP_IOS = false
@@ -141,21 +156,6 @@ def checkAndAbortBuild() {
     }
 }
 
-@NonCPS
-def stopCurrentBuild() {
-    Jenkins.instance.getItemByFullName(env.JOB_NAME).getLastBuild().doStop()
-}
-
-@NonCPS
-def isStartedManually() {
-    return Jenkins.instance.getItemByFullName(env.JOB_NAME).getLastBuild().getCause(hudson.model.Cause$UpstreamCause) == null
-}
-
-@NonCPS
-def getBuilds() {
-    return Jenkins.instance.getItemByFullName(env.JOB_NAME).builds
-}
-
 def startBraveBrowserBuild() {
     jobDsl(scriptText: """
         pipelineJob("brave-browser-build-pr-${BRAVE_BROWSER_BRANCH}") {
@@ -188,17 +188,17 @@ def startBraveBrowserBuild() {
         string(name: "BRANCH_PRODUCTIVITY_NAME", value: BRANCH_PRODUCTIVITY_NAME),
         string(name: "BRANCH_PRODUCTIVITY_DESCRIPTION", value: BRANCH_PRODUCTIVITY_DESCRIPTION),
         string(name: "BRANCH_PRODUCTIVITY_USER", value: BRANCH_PRODUCTIVITY_USER),
-        booleanParam(name: "SKIP_SIGNING", value: SKIP_SIGNING),
         booleanParam(name: "WIPE_WORKSPACE", value: WIPE_WORKSPACE),
         booleanParam(name: "SKIP_INIT", value: SKIP_INIT),
+        booleanParam(name: "SKIP_SIGNING", value: SKIP_SIGNING),
         booleanParam(name: "DISABLE_SCCACHE", value: DISABLE_SCCACHE),
         booleanParam(name: "DCHECK_ALWAYS_ON", value: DCHECK_ALWAYS_ON),
         booleanParam(name: "RUN_NETWORK_AUDIT", value: RUN_NETWORK_AUDIT),
-        booleanParam(name: "SKIP_ANDROID", value: SKIP_ANDROID),
-        booleanParam(name: "SKIP_IOS", value: SKIP_IOS),
-        booleanParam(name: "SKIP_LINUX", value: SKIP_LINUX),
-        booleanParam(name: "SKIP_MACOS", value: SKIP_MACOS),
-        booleanParam(name: "SKIP_WINDOWS", value: SKIP_WINDOWS)
+        // booleanParam(name: "SKIP_ANDROID", value: SKIP_ANDROID),
+        // booleanParam(name: "SKIP_IOS", value: SKIP_IOS),
+        // booleanParam(name: "SKIP_LINUX", value: SKIP_LINUX),
+        // booleanParam(name: "SKIP_MACOS", value: SKIP_MACOS),
+        // booleanParam(name: "SKIP_WINDOWS", value: SKIP_WINDOWS)
     ]
     currentBuild.result = build(job: "brave-browser-build-pr-${BRAVE_BROWSER_BRANCH}", parameters: params, propagate: false).result
 }
