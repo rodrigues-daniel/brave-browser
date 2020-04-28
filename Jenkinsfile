@@ -181,7 +181,7 @@ def checkAndAbortBuild() {
                 // build.finish(hudson.model.Result.ABORTED, new java.io.IOException("Aborting build"))
             }
         }
-        sleep(time: 1, unit: "MINUTES")
+        // sleep(time: 1, unit: "MINUTES")
     }
 }
 
