@@ -259,11 +259,11 @@ pipelineJob("brave-browser-build-pr-${BRANCH}") {
     cpsScm {
       scm {
         git {
-        //   remote {
-        //     url('https://github.com/brave/devops.git')
-        //   }
-          github('brave/devops', 'https')
-          credentialsId('brave-builds-github-token-for-pr-builder')
+          remote {
+            // url('https://github.com/brave/devops.git')
+            github('brave/devops', 'https')
+            credentialsId('brave-builds-github-token-for-pr-builder')
+          }
           branch('mplesa-jenkins-ci-pipeline-separates')
         }
       }
