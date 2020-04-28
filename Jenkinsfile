@@ -269,7 +269,7 @@ pipelineJob("brave-browser-build-pr-${BRANCH}") {
     }
   }
 }    
-    ''', sandbox: false)
+    ''', sandbox: true)
     params = [
         string(name: "BUILD_TYPE", value: BUILD_TYPE),
         string(name: "CHANNEL", value: CHANNEL),
