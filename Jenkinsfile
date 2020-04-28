@@ -6,8 +6,8 @@ pipeline {
         timestamps()
     }
     parameters {
-        choice(name: "BUILD_TYPE", choices: ["Release", "Debug"], description: "")
         choice(name: "CHANNEL", choices: ["nightly", "dev", "beta", "release", "development"], description: "")
+        choice(name: "BUILD_TYPE", choices: ["Release", "Debug"], description: "")
         string(name: "SLACK_BUILDS_CHANNEL", defaultValue: "#build-downloads-bot", description: "")
         booleanParam(name: "SKIP_SIGNING", defaultValue: true, description: "")
         booleanParam(name: "WIPE_WORKSPACE", defaultValue: false, description: "")
@@ -178,11 +178,11 @@ pipelineJob("brave-browser-build-pr-${BRAVE_BROWSER_BRANCH}") {
 }
     """)
     params = [
+        string(name: "CHANNEL", value: CHANNEL),
+        string(name: "BUILD_TYPE", value: BUILD_TYPE),
         string(name: "BRAVE_BROWSER_BRANCH", value: BRAVE_BROWSER_BRANCH),
         string(name: "BRAVE_CORE_BRANCH", value: BRAVE_CORE_BRANCH),
         string(name: "BASE_BRANCH", value: BASE_BRANCH),
-        string(name: "BUILD_TYPE", value: BUILD_TYPE),
-        string(name: "CHANNEL", value: CHANNEL),
         string(name: "SLACK_BUILDS_CHANNEL", value: SLACK_BUILDS_CHANNEL),
         string(name: "SLACK_USERNAME", value: SLACK_USERNAME),
         string(name: "BRANCH_PRODUCTIVITY_HOMEPAGE", value: BRANCH_PRODUCTIVITY_HOMEPAGE),
