@@ -253,7 +253,7 @@ def getBuilds() {
 }
 
 def startBraveBrowserBuild() {
-    jobDsl(scriptText: 'job("' + "brave-browser-build-pr-${BRANCH}" + '")')
+    pipelineJob(scriptText: 'job("' + "brave-browser-build-pr-${BRANCH}" + '")')
     params = [
         string(name: "BUILD_TYPE", value: BUILD_TYPE),
         string(name: "CHANNEL", value: CHANNEL),
