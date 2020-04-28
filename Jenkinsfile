@@ -254,7 +254,7 @@ def getBuilds() {
 
 def startBraveBrowserBuild() {
     jobDsl(scriptText: '''
-pipelineJob("brave-browser-build-pr-${BRANCH}") {
+pipelineJob("brave-browser-build-pr-${env.BRANCH}") {
   definition {
     cpsScm {
       scm {
