@@ -253,8 +253,8 @@ def getBuilds() {
 }
 
 def startBraveBrowserBuild() {
-    jobDsl(scriptText: '''
-pipelineJob("brave-browser-build-pr-${env.BRANCH}") {
+    jobDsl(scriptText: """
+pipelineJob("brave-browser-build-pr-${BRANCH}") {
   definition {
     cpsScm {
       scm {
@@ -269,7 +269,7 @@ pipelineJob("brave-browser-build-pr-${env.BRANCH}") {
     }
   }
 }    
-    ''')
+    """)
     params = [
         string(name: "BUILD_TYPE", value: BUILD_TYPE),
         string(name: "CHANNEL", value: CHANNEL),
