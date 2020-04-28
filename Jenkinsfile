@@ -256,18 +256,20 @@ def startBraveBrowserBuild() {
     jobDsl(scriptText: """
 pipelineJob("brave-browser-build-pr-${BRANCH}") {
   definition {
+    cpsScm {
       scm {
         git {
         //   remote {
         //     url('https://github.com/brave/devops.git')
         //   }
           github('brave/devops', 'https')
-          credentials('brave-builds-github-token-for-pr-builder')
+          credentialsId('brave-builds-github-token-for-pr-builder')
           branch('mplesa-jenkins-ci-pipeline-separates')
         }
       }
       scriptPath('jenkins/Jenkinsfile')
       lightweight()
+    }
   }
 }
     """)
