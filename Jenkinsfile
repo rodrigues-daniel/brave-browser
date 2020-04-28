@@ -253,7 +253,23 @@ def getBuilds() {
 }
 
 def startBraveBrowserBuild() {
-    pipelineJob(scriptText: 'job("' + "brave-browser-build-pr-${BRANCH}" + '")')
+    jobDsl(scriptText: '''
+pipelineJob("brave-browser-build-pr-${BRANCH}") {
+  definition {
+    cpsScm {
+      scm {
+        git {
+          remote {
+            url('https://github.com/jenkinsci/job-dsl-plugin.git')
+          }
+          branch('*/master')
+        }
+      }
+      lightweight()
+    }
+  }
+}    
+    ''', sandbox: false)
     params = [
         string(name: "BUILD_TYPE", value: BUILD_TYPE),
         string(name: "CHANNEL", value: CHANNEL),
