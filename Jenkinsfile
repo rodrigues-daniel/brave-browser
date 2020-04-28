@@ -158,24 +158,23 @@ def getBuilds() {
 
 def startBraveBrowserBuild() {
     jobDsl(scriptText: """
-pipelineJob("brave-browser-build-pr-${BRAVE_BROWSER_BRANCH}") {
-  definition {
-    cpsScm {
-      scm {
-        git {
-          remote {
-            // url('https://github.com/brave/devops.git')
-            github('brave/devops', 'https')
-            credentials('brave-builds-github-token-for-pr-builder')
-          }
-          branch('mplesa-jenkins-ci-pipeline-separate')
+        pipelineJob("brave-browser-build-pr-${BRAVE_BROWSER_BRANCH}") {
+            definition {
+                cpsScm {
+                    scm {
+                        git {
+                            remote {
+                                github('brave/devops', 'https')
+                                credentials('brave-builds-github-token-for-pr-builder')
+                            }
+                            branch('mplesa-jenkins-ci-pipeline-separate')
+                        }
+                    }
+                    scriptPath('jenkins/Jenkinsfile')
+                    lightweight()
+                }
+            }
         }
-      }
-      scriptPath('jenkins/Jenkinsfile')
-      lightweight()
-    }
-  }
-}
     """)
     params = [
         string(name: "CHANNEL", value: CHANNEL),
