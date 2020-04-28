@@ -35,7 +35,7 @@ pipeline {
             }
         }
         stage("build-all") {
-            // agent { label "master" }
+            agent { label "master" }
             when {
                 beforeAgent true
                 expression { !SKIP }
